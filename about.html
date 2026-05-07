@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>ABOUT | DOOMSIR1337</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: 'TitleFont';
+      src: url('fonts/SF.ttf') format('truetype');
+      font-weight: normal; font-style: normal;
+      /* Federation Starfleet: glyphs sit 0–701 in a 1000-UPem box.
+         Override ascent/descent so the browser allocates only actual
+         ink space, eliminating ~30% phantom gap above and ~28% below. */
+      ascent-override: 72%;
+      descent-override: 0%;
+      line-gap-override: 0%;
+    }
+    :root {
+      --red: #e8000a;
+      --black: #0a0a0a;
+      --white: #f0f0f0;
+      --tech: 'Share Tech Mono', monospace;
+      --display: 'Bebas Neue', sans-serif;
+      --title-font: 'TitleFont', 'Bebas Neue', sans-serif;
+      --mono: 'Space Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      height: 100%;
+      height: -webkit-fill-available;
+    }
+
+    body {
+      width: 100%;
+      min-height: 100%;
+      min-height: -webkit-fill-available;
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--mono);
+      cursor: crosshair;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1000; opacity: 0.3;
+    }
+
+    .scanline {
+      position: fixed; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(transparent, rgba(232,0,10,0.08), transparent);
+      animation: scan 7s linear infinite;
+      pointer-events: none; z-index: 900;
+    }
+    @keyframes scan { from { transform: translateY(-4px); } to { transform: translateY(100vh); } }
+
+    /* Cursor: desktop only */
+    .cur  { width:10px; height:10px; background:var(--red); position:fixed; top:0; left:0; pointer-events:none; z-index:9999; mix-blend-mode:difference; }
+    .ring { width:28px; height:28px; border:1px solid var(--red); border-radius:0; position:fixed; top:0; left:0; pointer-events:none; z-index:9998; opacity:0.45; transition: width .18s, height .18s, opacity .18s; }
+
+    @keyframes introSlideDown { 0% { transform: translateY(-100%); } 100% { transform: translateY(0); } }
+    @keyframes introSlideUp { 0% { transform: translateY(100%); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes introExpand { 0% { flex: 0 0 0%; opacity: 0; } 100% { flex: 0 0 6%; opacity: 1; } }
+    @keyframes typing { from { width: 0; } to { width: 100%; } }
+    @keyframes cursorBlink { 50% { border-right-color: transparent; } }
+
+    /* ── SHELL ── */
+    #shell {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      flex: 0 0 auto;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      background: var(--black);
+      border-bottom: 1px solid #1e1e1e;
+      z-index: 500;
+      animation: introSlideDown 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
+    }
+    .nav-logo { font-family: var(--tech); font-size: 11px; letter-spacing: 0.12em; border: 1px solid var(--white); padding: 4px 10px; color: var(--white); text-decoration: none; transition: border-color .15s, color .15s; }
+    .nav-logo:hover { border-color: var(--red); color: var(--red); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-family: var(--tech); font-size: 10px; letter-spacing: 0.2em; color: var(--white); text-decoration: none; text-transform: uppercase; position: relative; transition: color .15s; }
+    .nav-links a::after { content:''; position:absolute; bottom:-2px; left:0; right:0; height:1px; background:var(--red); transform:scaleX(0); transition: transform .2s ease; }
+    .nav-links a:hover { color: var(--red); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-status { font-family: var(--tech); font-size: 10px; letter-spacing: 0.15em; color: #555; display: flex; align-items: center; gap: 8px; }
+    .dot { width:6px; height:6px; background:var(--red); border-radius:50%; animation: blink 1.4s step-start infinite; }
+    @keyframes blink { 50% { opacity:0; } }
+
+    /* ── ULTRA SLIM HERO ── */
+    #hero {
+      flex: 0 0 6%;
+      background: var(--red);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 24px;
+      animation: introExpand 0.8s cubic-bezier(0.86, 0, 0.07, 1) 0.3s both;
+    }
+    #hero::before { content:''; position:absolute; inset:0; background: repeating-linear-gradient(-50deg, transparent, transparent 100px, rgba(0,0,0,0.035) 100px, rgba(0,0,0,0.035) 101px); pointer-events:none; }
+    .hero-info { display:flex; align-items:center; gap:12px; position: relative; z-index:1; }
+    .hire-btn {
+      font-family: var(--tech);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--black);
+      border: 1px solid var(--black);
+      padding: 4px 12px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: background .15s, color .15s;
+    }
+    .hire-btn:hover { background: var(--black); color: var(--red); }
+
+    /* ── NAME BAR ── */
+    #name-bar { flex: 0 0 auto; background: var(--black); padding: 4px 16px 0; overflow: hidden; border-top: 1px solid #1a1a1a; }
+    .dotted-rule { width:100%; border:none; border-top:1px dotted #282828; margin-bottom:4px; }
+
+    .name-glitch {
+      font-family: var(--title-font); font-size: clamp(72px, 13.5vw, 156px); line-height: .86; color: var(--red); letter-spacing: -0.01em;
+      font-weight: 400; position: relative; display: inline-block; white-space: nowrap; overflow: hidden;
+      border-right: 4px solid var(--red); width: 0;
+      animation: typing 1s steps(5, end) 0.8s forwards, cursorBlink 0.6s step-end infinite 0.8s;
+      user-select: none;
+    }
+    .name-glitch::before, .name-glitch::after {
+      content: attr(aria-label); position:absolute; top:0; left:0; width:100%; height:100%;
+      font-family:var(--title-font); font-weight: 400; opacity:0;
+    }
+    .name-glitch::before { color:#00ffff; clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); animation: gs_stable 4s infinite 2s; mix-blend-mode:screen; }
+    .name-glitch::after  { color:#ff00aa; clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%); animation: gs_stable 4s infinite 2.1s; mix-blend-mode:screen; }
+    @keyframes gs_stable {
+      0%, 88%, 100% { opacity: 0; transform: translateX(0); }
+      90% { opacity: 0.8; transform: translateX(-1px); }
+      92% { opacity: 1; transform: translateX(1px); }
+      94% { opacity: 0.6; transform: translateX(0); }
+    }
+    .name-glitch.done-typing { border-right: none !important; animation: typing 1s steps(5, end) 0.8s forwards !important; }
+
+    /* ── TICKER (empty on this page, keeps structural height) ── */
+    #ticker {
+      flex: 0 0 28px;
+      background: var(--red);
+      overflow: hidden;
+      border-top: 2px solid var(--black);
+      border-bottom: 2px solid var(--black);
+      position: relative;
+      animation: introSlideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) 1s both;
+    }
+
+    /* ── SPLIT CONTENT PANELS ── */
+    #split {
+      flex: 1 1 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 0;
+      border-top: 1px solid #1e1e1e;
+      animation: introSlideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) 1.2s both;
+    }
+    .split-panel {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 22px 28px 20px;
+      overflow-y: auto;
+      background: var(--black);
+      /* Hide scrollbar visually but keep it functional */
+      scrollbar-width: none;
+    }
+    .split-panel::-webkit-scrollbar { display: none; }
+    .split-panel:first-child { border-right: 1px solid #1e1e1e; }
+
+    .panel-header { font-family: var(--display); font-size: 32px; color: var(--red); margin-bottom: 15px; border-bottom: 1px solid #1e1e1e; padding-bottom: 5px; }
+    .panel-text { font-family: var(--mono); font-size: 11px; line-height: 1.8; color: #aaa; margin-bottom: 20px; text-align: justify; }
+    .stat-row { display: flex; justify-content: space-between; font-family: var(--tech); font-size: 10px; margin-bottom: 8px; border-bottom: 1px dotted #222; padding-bottom: 2px; }
+    .stat-label { color: #555; text-transform: uppercase; }
+    .stat-value { color: var(--white); }
+
+    /* ── FOOTER ── */
+    footer { position: fixed; bottom: 0; left: 0; width: 100%; height: 38px; border-top: 1px solid #1a1a1a; padding: 0 22px; display: flex; justify-content: space-between; align-items: center; background: var(--black); z-index: 1001; animation: introSlideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) 1.4s both; }
+    .footer-left, .footer-right { font-family: var(--tech); font-size: 9px; letter-spacing: 0.14em; color: #616161; }
+    .footer-left span { color: #666; }
+    .footer-right span { color: var(--red); }
+
+    /* ══════════════════════════════════════════
+       MOBILE RESPONSIVE — 768px and below
+    ══════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      html, body {
+        height: 100%;
+        height: -webkit-fill-available;
+        overflow: hidden;
+      }
+
+      #shell {
+        height: 100vh;
+        height: 100dvh;
+        height: -webkit-fill-available;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── Nav ── */
+      nav {
+        flex: 0 0 auto;
+        padding: 0 14px;
+        height: 42px;
+      }
+      .nav-logo { font-size: 10px; padding: 3px 8px; }
+      .nav-links { gap: 16px; }
+      .nav-links a { font-size: 9px; letter-spacing: 0.12em; }
+      .nav-status { display: none; }
+
+      /* ── Slim hero bar: fixed pixel height, no animation ── */
+      #hero {
+        flex: 0 0 36px;
+        padding: 0 14px;
+        animation: none;
+        opacity: 1;
+      }
+      .hero-info { gap: 8px; }
+      .hire-btn {
+        font-size: 8px;
+        padding: 3px 8px;
+        min-height: unset;
+        line-height: 1;
+      }
+
+      /* ── Name bar ── */
+      #name-bar { padding: 3px 12px 0; }
+      .dotted-rule { margin-bottom: 1px; }
+      /* font-size handled by fitNameToContainer() JS */
+
+      /* ── Ticker ── */
+      #ticker { flex: 0 0 24px; }
+
+      /* ── Split panels: stack vertically, each half scrollable ── */
+      #split {
+        flex: 1 1 0;
+        min-height: 0;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        overflow: hidden;
+      }
+      .split-panel {
+        padding: 14px 16px 12px;
+        overflow-y: auto;
+      }
+      .split-panel:first-child {
+        border-right: none;
+        border-bottom: 1px solid #1e1e1e;
+      }
+      .panel-header { font-size: 24px; margin-bottom: 10px; }
+      .panel-text { font-size: 10px; line-height: 1.7; margin-bottom: 12px; }
+      .stat-row { font-size: 9px; }
+
+      /* ── Footer ── */
+      footer {
+        height: auto;
+        padding: 6px 14px;
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 2px;
+      }
+      .footer-left, .footer-right { font-size: 9px; letter-spacing: 0.08em; }
+    }
+
+    /* ══════════════════════════════════════════
+       SMALL MOBILE — 480px and below
+    ══════════════════════════════════════════ */
+    @media (max-width: 480px) {
+      nav { height: 40px; padding: 0 12px; }
+      .nav-logo { font-size: 9.5px; padding: 3px 7px; }
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: 8px; letter-spacing: 0.08em; }
+
+      #hero { flex: 0 0 32px; padding: 0 12px; }
+      .hire-btn { font-size: 7.5px; padding: 3px 7px; min-height: unset; }
+
+      /* name-glitch uses original line-height from base CSS */
+
+      .panel-header { font-size: 20px; }
+      .panel-text { font-size: 9.5px; }
+      .stat-row { font-size: 8.5px; }
+      .stat-label, .stat-value { font-size: 8px; }
+      .split-panel { padding: 12px 14px 10px; }
+
+      footer { padding: 5px 12px; }
+      .footer-left, .footer-right { font-size: 7.5px; }
+    }
+
+    /* ══════════════════════════════════════════
+       TINY MOBILE — 360px and below
+    ══════════════════════════════════════════ */
+    @media (max-width: 360px) {
+      .nav-links { gap: 10px; }
+      .nav-links a { font-size: 7.5px; }
+      .panel-header { font-size: 18px; }
+      .panel-text { font-size: 9px; }
+      .stat-label, .stat-value { font-size: 7.5px; }
+    }
+
+    /* ══════════════════════════════════════════
+       LANDSCAPE MOBILE — short viewport
+    ══════════════════════════════════════════ */
+    @media (max-height: 500px) and (max-width: 900px) {
+      #hero { flex: 0 0 28px; padding: 0 12px; }
+      .hire-btn { font-size: 7.5px; padding: 2px 7px; }
+      #name-bar { padding: 2px 12px 0; }
+      .dotted-rule { margin-bottom: 1px; }
+      #ticker { flex: 0 0 20px; }
+      /* In landscape, show panels side-by-side again so both are visible */
+      #split {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+      }
+      .split-panel:first-child {
+        border-right: 1px solid #1e1e1e;
+        border-bottom: none;
+      }
+      .panel-header { font-size: 18px; margin-bottom: 6px; }
+      .panel-text { font-size: 9px; line-height: 1.5; margin-bottom: 8px; }
+      .stat-row { font-size: 8px; margin-bottom: 4px; }
+      footer { min-height: 26px; padding: 4px 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cur" id="cur"></div>
+  <div class="ring" id="ring"></div>
+  <div class="scanline"></div>
+  <div id="shell">
+    <nav>
+      <a class="nav-logo" href="index.html">DOOMSIR1337</a>
+      <ul class="nav-links">
+        <li><a href="index.html">-|HOME|-</a></li>
+        <li><a href="work.html">WORK</a></li>
+        <li><a href="blog.html">BLOG</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
+      </ul>
+      <div class="nav-status"><span class="dot"></span>SYS.ONLINE &nbsp; U.1.1.8</div>
+    </nav>
+    <section id="hero">
+      <div class="hero-info">
+        <a href="https://www.artstation.com/doomsir1337" class="hire-btn" target="_blank">ARTSTATION</a>
+        <a href="#" class="hire-btn" target="_blank">KO-FI</a>
+      </div>
+    </section>
+    <div id="name-bar">
+      <hr class="dotted-rule" />
+      <div class="name-glitch" aria-label="ABOUT">ABOUT</div>
+    </div>
+
+    <div id="ticker"></div>
+
+    <section id="split">
+      <div class="split-panel">
+        <div class="panel-header">THE_MANIFESTO</div>
+        <p class="panel-text">I am a digital artist and UI/UX designer specialized in high-fidelity science fiction interfaces and algorithmic brutalism. My work focuses on the intersection of human interaction and cold, machine-driven logic. From crafting LCARS-inspired tactical displays to developing lightweight 3D asset generation workflows, I prioritize functional intensity over decorative fluff.</p>
+        <p class="panel-text">Currently exploring the boundaries of glitch aesthetics and generative systems, I aim to create digital spaces that feel lived-in, slightly broken, and technologically superior.</p>
+      </div>
+      <div class="split-panel">
+        <div class="panel-header">SPECIFICATIONS</div>
+        <div class="stat-row"><span class="stat-label">PRIMARY_STACK</span><span class="stat-value">HTML/CSS/JS / BLENDER</span></div>
+        <div class="stat-row"><span class="stat-label">DESIGN_STYLE</span><span class="stat-value">BRUTALIST / SCIFI / GLITCH</span></div>
+        <div class="stat-row"><span class="stat-label">INTERESTS</span><span class="stat-value">LCARS / STAR TREK / HFY</span></div>
+        <div class="stat-row"><span class="stat-label">EXPERTISE</span><span class="stat-value">3D PRINTING / UI ARCHITECTURE</span></div>
+        <div class="stat-row"><span class="stat-label">HARDWARE</span><span class="stat-value">MID-END OPTIMIZED</span></div>
+        <div class="stat-row"><span class="stat-label">VRAM_TARGET</span><span class="stat-value">4GB - 6GB STABLE</span></div>
+      </div>
+    </section>
+    <footer>
+      <div class="footer-left"><span>U/DOOMSIR1337</span> &#9646; 2026 &nbsp;|&nbsp; <span>DIGITAL ART AND DESIGN</span> &nbsp;|&nbsp;</div>
+      <div class="footer-right">STATUS: <span>ACCEPTING COMMISSIONS</span></div>
+    </footer>
+  </div>
+  <script>
+    // ── Custom cursor: always active on all devices ──
+    const cur = document.getElementById('cur'), ring = document.getElementById('ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cur.style.transform = `translate(${mx - 5}px,${my - 5}px)`;
+    });
+    document.addEventListener('touchmove', e => {
+      const t = e.touches[0];
+      mx = t.clientX; my = t.clientY;
+      cur.style.transform = `translate(${mx - 5}px,${my - 5}px)`;
+    }, { passive: true });
+    (function loop() {
+      rx += (mx - rx - 14) * 0.13;
+      ry += (my - ry - 14) * 0.13;
+      ring.style.transform = `translate(${rx}px,${ry}px)`;
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a,button').forEach(el => {
+      el.addEventListener('mouseenter',  () => { ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='0.9'; });
+      el.addEventListener('mouseleave',  () => { ring.style.width='28px'; ring.style.height='28px'; ring.style.opacity='0.45'; });
+      el.addEventListener('touchstart',  () => { ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='0.9'; }, { passive: true });
+      el.addEventListener('touchend',    () => { ring.style.width='28px'; ring.style.height='28px'; ring.style.opacity='0.45'; }, { passive: true });
+    });
+
+    const nameEl = document.querySelector('.name-glitch');
+    nameEl.addEventListener('animationend', (e) => {
+      if (e.animationName === 'typing') nameEl.classList.add('done-typing');
+    });
+
+    // ── Dynamic viewport height fix for mobile browsers (address bar) ──
+    function setVh() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    setVh();
+    window.addEventListener('resize', setVh);
+    window.addEventListener('orientationchange', () => { setTimeout(setVh, 100); });
+  </script>
+</body>
+</html>
